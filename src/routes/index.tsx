@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import DashboardPage from "../views/dashboard/ui/DashboardPage";
 
 export const Route = createFileRoute("/")({
   component: MainPage,
@@ -7,7 +8,7 @@ export const Route = createFileRoute("/")({
 function MainPage() {
   return (
     <div className="p-2">
-      <h3>Welcome to ShipTrack</h3>
+      <DashboardPage />
     </div>
   );
 }

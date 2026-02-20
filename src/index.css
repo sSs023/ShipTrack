@@ -1,5 +1,12 @@
 @import "tailwindcss";
-@plugin "./hero.ts";
+@import "@heroui/styles";
 
-@source "../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
-@custom-variant dark (&:is(.dark *));
+html,
+body {
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  --accent: #1152d4;
+  --accent-rgb: 17 82 212;
+}

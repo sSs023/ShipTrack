@@ -22,5 +22,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
+  "baseUrl": ".",
+  "paths": {
+    "@src/*": ["src/*"],
+    "@public/*": ["public/*"]
+  },
   "include": ["vite.config.ts"]
 }

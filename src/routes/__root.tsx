@@ -1,16 +1,16 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
+import Footer from "../widgets/footer";
 import Header from "../widgets/header";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 function RootLayout() {
   return (
-    <>
-      <div className="flex gap-2 p-2">
-        <Header />
+    <div className="flex h-full min-h-screen flex-col">
+      <Header />
+      <main className="grow bg-slate-100">
         <Outlet />
-        <TanStackRouterDevtools />
-      </div>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
