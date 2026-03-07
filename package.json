@@ -10,17 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@heroui/react": "3.0.0-beta.7",
-    "@heroui/styles": "3.0.0-beta.7",
-    "@heroui/system": "^2.4.27",
-    "@heroui/theme": "^2.4.26",
+    "@heroui/react": "^2.8.9",
     "@tailwindcss/vite": "^4.2.0",
+    "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-router": "^1.161.1",
     "@tanstack/react-router-devtools": "^1.161.1",
+    "axios": "^1.13.6",
+    "dayjs": "^1.11.19",
+    "framer-motion": "^12.34.4",
     "motion": "^12.34.2",
     "react": "19.2.4",
+    "react-cookie": "^8.0.1",
     "react-dom": "19.2.4",
+    "react-i18next": "^16.5.4",
     "react-icons": "^5.5.0",
+    "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.0"
   },
   "devDependencies": {

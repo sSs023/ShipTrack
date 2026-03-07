@@ -1,12 +1,40 @@
 @import "tailwindcss";
-@import "@heroui/styles";
+@plugin "./hero.ts";
+/* Note: You may need to change the path to fit your project structure */
+@source "../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --accent: #135bec;
+  --accent-rgb: 59 130 246;
+  --background: #f6f6f8;
+  --muted: #64748b;
+  --muted-light: #94a3b8;
+  --border: #e2e8f0;
+  --font-mono: "Cascadia Mono", monospace;
+  --font-primary: "Inter", sans-serif;
+}
+
+@theme {
+  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+  --color-border: var(--border);
+  --shadow-accent:
+    0 10px 15px -3px rgb(var(--accent-rgb) / 0.2),
+    0 4px 6px -4px rgb(var(--accent-rgb) / 0.5);
+  --font-mono: var(--font-mono);
+  --font-primary: var(--font-primary);
+}
+
+@layer base {
+  * {
+    @apply border-[var(--color-border)];
+  }
+}
 
 html,
 body {
   font-family: "Inter", sans-serif;
-}
-
-:root {
-  --accent: #1152d4;
-  --accent-rgb: 17 82 212;
 }

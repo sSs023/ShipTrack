@@ -1,17 +1,17 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
-import Footer from "../widgets/footer";
-import Header from "../widgets/header";
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { type AuthStateContext } from "../features/auth";
 
 function RootLayout() {
   return (
-    <div className="flex h-full min-h-screen flex-col">
-      <Header />
-      <main className="grow bg-slate-100">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Outlet />
+      <TanStackRouterDevtools />
+    </>
   );
 }
 
-export const Route = createRootRoute({ component: RootLayout });
+export const Route = createRootRouteWithContext<AuthStateContext>()({
+  component: RootLayout,
+  // notFoundComponent: () => <Navigate to="/chats" />,
+});

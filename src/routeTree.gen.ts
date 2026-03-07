@@ -9,24 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TrackingRouteImport } from './routes/tracking'
-import { Route as ShipmentsRouteImport } from './routes/shipments'
-import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as TrackRouteImport } from './routes/track'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthReportsRouteImport } from './routes/_auth.reports'
+import { Route as AuthDashboardRouteImport } from './routes/_auth.dashboard'
+import { Route as AuthShipmentsIndexRouteImport } from './routes/_auth.shipments.index'
+import { Route as AuthShipmentsNewRouteImport } from './routes/_auth.shipments.new'
+import { Route as AuthShipmentsShipmentIdRouteImport } from './routes/_auth.shipments.$shipmentId'
 
-const TrackingRoute = TrackingRouteImport.update({
-  id: '/tracking',
-  path: '/tracking',
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ShipmentsRoute = ShipmentsRouteImport.update({
-  id: '/shipments',
-  path: '/shipments',
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -34,62 +44,140 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthReportsRoute = AuthReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthDashboardRoute = AuthDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthShipmentsIndexRoute = AuthShipmentsIndexRouteImport.update({
+  id: '/shipments/',
+  path: '/shipments/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthShipmentsNewRoute = AuthShipmentsNewRouteImport.update({
+  id: '/shipments/new',
+  path: '/shipments/new',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthShipmentsShipmentIdRoute = AuthShipmentsShipmentIdRouteImport.update({
+  id: '/shipments/$shipmentId',
+  path: '/shipments/$shipmentId',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/reports': typeof ReportsRoute
-  '/shipments': typeof ShipmentsRoute
-  '/tracking': typeof TrackingRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/track': typeof TrackRoute
+  '/dashboard': typeof AuthDashboardRoute
+  '/reports': typeof AuthReportsRoute
+  '/shipments/$shipmentId': typeof AuthShipmentsShipmentIdRoute
+  '/shipments/new': typeof AuthShipmentsNewRoute
+  '/shipments/': typeof AuthShipmentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/reports': typeof ReportsRoute
-  '/shipments': typeof ShipmentsRoute
-  '/tracking': typeof TrackingRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/track': typeof TrackRoute
+  '/dashboard': typeof AuthDashboardRoute
+  '/reports': typeof AuthReportsRoute
+  '/shipments/$shipmentId': typeof AuthShipmentsShipmentIdRoute
+  '/shipments/new': typeof AuthShipmentsNewRoute
+  '/shipments': typeof AuthShipmentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/reports': typeof ReportsRoute
-  '/shipments': typeof ShipmentsRoute
-  '/tracking': typeof TrackingRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/track': typeof TrackRoute
+  '/_auth/dashboard': typeof AuthDashboardRoute
+  '/_auth/reports': typeof AuthReportsRoute
+  '/_auth/shipments/$shipmentId': typeof AuthShipmentsShipmentIdRoute
+  '/_auth/shipments/new': typeof AuthShipmentsNewRoute
+  '/_auth/shipments/': typeof AuthShipmentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/reports' | '/shipments' | '/tracking'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/track'
+    | '/dashboard'
+    | '/reports'
+    | '/shipments/$shipmentId'
+    | '/shipments/new'
+    | '/shipments/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/reports' | '/shipments' | '/tracking'
-  id: '__root__' | '/' | '/reports' | '/shipments' | '/tracking'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/track'
+    | '/dashboard'
+    | '/reports'
+    | '/shipments/$shipmentId'
+    | '/shipments/new'
+    | '/shipments'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/login'
+    | '/register'
+    | '/track'
+    | '/_auth/dashboard'
+    | '/_auth/reports'
+    | '/_auth/shipments/$shipmentId'
+    | '/_auth/shipments/new'
+    | '/_auth/shipments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ReportsRoute: typeof ReportsRoute
-  ShipmentsRoute: typeof ShipmentsRoute
-  TrackingRoute: typeof TrackingRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
+  TrackRoute: typeof TrackRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tracking': {
-      id: '/tracking'
-      path: '/tracking'
-      fullPath: '/tracking'
-      preLoaderRoute: typeof TrackingRouteImport
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/shipments': {
-      id: '/shipments'
-      path: '/shipments'
-      fullPath: '/shipments'
-      preLoaderRoute: typeof ShipmentsRouteImport
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -99,14 +187,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/reports': {
+      id: '/_auth/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthReportsRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/dashboard': {
+      id: '/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthDashboardRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/shipments/': {
+      id: '/_auth/shipments/'
+      path: '/shipments'
+      fullPath: '/shipments/'
+      preLoaderRoute: typeof AuthShipmentsIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/shipments/new': {
+      id: '/_auth/shipments/new'
+      path: '/shipments/new'
+      fullPath: '/shipments/new'
+      preLoaderRoute: typeof AuthShipmentsNewRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/shipments/$shipmentId': {
+      id: '/_auth/shipments/$shipmentId'
+      path: '/shipments/$shipmentId'
+      fullPath: '/shipments/$shipmentId'
+      preLoaderRoute: typeof AuthShipmentsShipmentIdRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
 
+interface AuthRouteChildren {
+  AuthDashboardRoute: typeof AuthDashboardRoute
+  AuthReportsRoute: typeof AuthReportsRoute
+  AuthShipmentsShipmentIdRoute: typeof AuthShipmentsShipmentIdRoute
+  AuthShipmentsNewRoute: typeof AuthShipmentsNewRoute
+  AuthShipmentsIndexRoute: typeof AuthShipmentsIndexRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthDashboardRoute: AuthDashboardRoute,
+  AuthReportsRoute: AuthReportsRoute,
+  AuthShipmentsShipmentIdRoute: AuthShipmentsShipmentIdRoute,
+  AuthShipmentsNewRoute: AuthShipmentsNewRoute,
+  AuthShipmentsIndexRoute: AuthShipmentsIndexRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ReportsRoute: ReportsRoute,
-  ShipmentsRoute: ShipmentsRoute,
-  TrackingRoute: TrackingRoute,
+  AuthRoute: AuthRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
+  TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

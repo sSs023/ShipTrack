@@ -1,4 +1,4 @@
-import { Avatar, Button, Description, Separator } from "@heroui/react";
+import { Avatar, Button, Card } from "@heroui/react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { CgBell } from "react-icons/cg";
@@ -48,22 +48,17 @@ export default function Header() {
         <Button variant="ghost">
           <GoQuestion className="size-5 text-slate-500" />
         </Button>
-        <Separator orientation="vertical" className="h-8" />
+        <Card className="h-8" />
         <div className="flex items-center gap-3 p-2">
           <div className="flex flex-col items-end gap-1">
             <div className="text-xs font-semibold">Alex Riviera</div>
-            <Description className="text-[10px]">
-              Operations Manager
-            </Description>
+            <p className="text-[10px]">Operations Manager</p>
           </div>
-          <Avatar
-            className="outline-success/70 outline-2 outline-offset-2"
-            variant="soft"
-          >
-            <Avatar.Image src="https://i.pravatar.cc/150?img=9" />
+          <Avatar className="outline-success/70 outline-2 outline-offset-2">
+            {/* <Avatar.Image src="https://i.pravatar.cc/150?img=9" />
             <Avatar.Fallback className="" color="success">
               AR
-            </Avatar.Fallback>
+            </Avatar.Fallback> */}
           </Avatar>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Surface } from "@heroui/react";
+import { Card } from "@heroui/react";
 import { FiPackage } from "react-icons/fi";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { RiTruckLine } from "react-icons/ri";
@@ -37,10 +37,7 @@ export default function DashboardStats() {
   return (
     <div className="grid grid-cols-3 gap-6">
       {stats.map((stat, i) => (
-        <Surface
-          key={i}
-          className="flex items-center gap-5 rounded-xl border border-slate-300 p-6"
-        >
+        <Card key={i} className="flex w-full flex-row items-center gap-5 p-6">
           {stat.icon}
           <div className="flex flex-col gap-1">
             <span className="text-sm font-medium text-slate-600">
@@ -50,7 +47,7 @@ export default function DashboardStats() {
               {stat.value}
             </h3>
           </div>
-        </Surface>
+        </Card>
       ))}
     </div>
   );
