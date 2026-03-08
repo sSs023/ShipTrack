@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import DashboardPage from "../views/dashboard/ui/DashboardPage";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_auth/")({
   component: MainPage,
   beforeLoad: ({ context: { isAuthenticated } }) => {
     if (!isAuthenticated) {

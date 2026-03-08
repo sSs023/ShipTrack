@@ -1,0 +1,14 @@
+{
+  "login": {
+    "welcomeBack": "Welcome back",
+    "enterCredentials": "Enter your credentials to access the control panel.",
+    "email": "Email",
+    "emailPlaceholder": "Your email",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "rememberDevice": "Remember this device",
+    "signIn": "Sign in",
+    "secureConnection": "Secure encrypted connection",
+    "loginSuccess": "Successfully logged in"
+  }
+}

@@ -1,4 +1,5 @@
 import { Button, Card } from "@heroui/react";
+import { Link } from "@tanstack/react-router";
 import { FiPlusCircle } from "react-icons/fi";
 
 export default function DashboardWelcome() {
@@ -13,13 +14,15 @@ export default function DashboardWelcome() {
             new deliveries with just a few clicks.
           </p>
         </div>
-        <Button
-          variant="solid"
-          className="bg-accent shadow-accent h-auto rounded-lg px-8 py-3 text-base font-bold text-white"
-        >
-          <FiPlusCircle className="size-5" />
-          Book Shipment
-        </Button>
+        <Link to="/shipments/new">
+          <Button
+            variant="solid"
+            className="bg-accent shadow-accent h-auto rounded-lg px-8 py-3 text-base font-bold text-white"
+          >
+            <FiPlusCircle className="size-5" />
+            Book Shipment
+          </Button>
+        </Link>
       </div>
     </Card>
   );

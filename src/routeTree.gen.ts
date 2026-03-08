@@ -13,7 +13,7 @@ import { Route as TrackRouteImport } from './routes/track'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthRouteImport } from './routes/_auth'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthIndexRouteImport } from './routes/_auth.index'
 import { Route as AuthReportsRouteImport } from './routes/_auth.reports'
 import { Route as AuthDashboardRouteImport } from './routes/_auth.dashboard'
 import { Route as AuthShipmentsIndexRouteImport } from './routes/_auth.shipments.index'
@@ -39,10 +39,10 @@ const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthIndexRoute = AuthIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRoute,
 } as any)
 const AuthReportsRoute = AuthReportsRouteImport.update({
   id: '/reports',
@@ -71,7 +71,7 @@ const AuthShipmentsShipmentIdRoute = AuthShipmentsShipmentIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthIndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/track': typeof TrackRoute
@@ -82,25 +82,25 @@ export interface FileRoutesByFullPath {
   '/shipments/': typeof AuthShipmentsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/track': typeof TrackRoute
   '/dashboard': typeof AuthDashboardRoute
   '/reports': typeof AuthReportsRoute
+  '/': typeof AuthIndexRoute
   '/shipments/$shipmentId': typeof AuthShipmentsShipmentIdRoute
   '/shipments/new': typeof AuthShipmentsNewRoute
   '/shipments': typeof AuthShipmentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/track': typeof TrackRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/reports': typeof AuthReportsRoute
+  '/_auth/': typeof AuthIndexRoute
   '/_auth/shipments/$shipmentId': typeof AuthShipmentsShipmentIdRoute
   '/_auth/shipments/new': typeof AuthShipmentsNewRoute
   '/_auth/shipments/': typeof AuthShipmentsIndexRoute
@@ -119,31 +119,30 @@ export interface FileRouteTypes {
     | '/shipments/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/login'
     | '/register'
     | '/track'
     | '/dashboard'
     | '/reports'
+    | '/'
     | '/shipments/$shipmentId'
     | '/shipments/new'
     | '/shipments'
   id:
     | '__root__'
-    | '/'
     | '/_auth'
     | '/login'
     | '/register'
     | '/track'
     | '/_auth/dashboard'
     | '/_auth/reports'
+    | '/_auth/'
     | '/_auth/shipments/$shipmentId'
     | '/_auth/shipments/new'
     | '/_auth/shipments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
@@ -180,12 +179,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_auth/': {
+      id: '/_auth/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/_auth/reports': {
       id: '/_auth/reports'
@@ -228,6 +227,7 @@ declare module '@tanstack/react-router' {
 interface AuthRouteChildren {
   AuthDashboardRoute: typeof AuthDashboardRoute
   AuthReportsRoute: typeof AuthReportsRoute
+  AuthIndexRoute: typeof AuthIndexRoute
   AuthShipmentsShipmentIdRoute: typeof AuthShipmentsShipmentIdRoute
   AuthShipmentsNewRoute: typeof AuthShipmentsNewRoute
   AuthShipmentsIndexRoute: typeof AuthShipmentsIndexRoute
@@ -236,6 +236,7 @@ interface AuthRouteChildren {
 const AuthRouteChildren: AuthRouteChildren = {
   AuthDashboardRoute: AuthDashboardRoute,
   AuthReportsRoute: AuthReportsRoute,
+  AuthIndexRoute: AuthIndexRoute,
   AuthShipmentsShipmentIdRoute: AuthShipmentsShipmentIdRoute,
   AuthShipmentsNewRoute: AuthShipmentsNewRoute,
   AuthShipmentsIndexRoute: AuthShipmentsIndexRoute,
@@ -244,7 +245,6 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
