@@ -3,8 +3,8 @@ import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 import { Cookies } from "react-cookie";
 
 export const request = axios.create({
-  baseURL: "http://localhost:5000/api",
-  // baseURL: import.meta.env.VITE_PUBLIC_BASE_URL,
+  // baseURL: "http://localhost:5000/api",
+  baseURL: import.meta.env.VITE_PUBLIC_BASE_URL,
 });
 
 let isRefreshing = false;
