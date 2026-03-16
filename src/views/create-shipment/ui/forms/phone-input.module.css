@@ -23,6 +23,10 @@
   @apply shadow-xs;
 }
 
+.phoneInput.invalid :global(.react-international-phone-input) {
+  @apply border-danger!;
+}
+
 .phoneInput:hover :global(.react-international-phone-input),
 .group:hover .phoneInput :global(.react-international-phone-input) {
   border: 2px solid rgb(179, 174, 174) !important;
@@ -31,3 +35,4 @@
 .phoneInput:focus-within :global(.react-international-phone-input) {
   border: 2px solid rgb(179, 174, 174) !important;
 }
+

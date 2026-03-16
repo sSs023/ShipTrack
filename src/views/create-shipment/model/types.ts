@@ -1,11 +1,15 @@
 import { z } from "zod";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 export type IDeliveryOption = "standard" | "economy" | "express";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
   address: z.string().min(1, "Address is required"),
-  phone: z.string().min(1, "Phone is required"),
+  phone: z
+    .string()
+    .min(1, "Phone is required")
+    .refine(isValidPhoneNumber, "Enter a valid phone number"),
 });
 
 export const createShipmentSchema = z.object({

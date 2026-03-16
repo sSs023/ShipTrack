@@ -1,16 +1,15 @@
 import { Input } from "@heroui/react";
 import { RiUserLocationFill } from "react-icons/ri";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useFormState } from "react-hook-form";
 import { PhoneInput } from "react-international-phone";
 import type { CreateShipmentFormData } from "../../model/types";
 import styles from "./phone-input.module.css";
 
 export default function CreateShipmentStep2() {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext<CreateShipmentFormData>();
+  const { register, control } = useFormContext<CreateShipmentFormData>();
+  const { errors } = useFormState<CreateShipmentFormData>({
+    name: ["recipient.name", "recipient.address", "recipient.phone"],
+  });
 
   return (
     <div className="space-y-6">

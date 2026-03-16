@@ -1,7 +1,7 @@
 import { Button, Card } from "@heroui/react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, type FieldPath } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CreateShipmentHeader from "./create-shipment-header";
 import CreateShipmentStep1 from "./forms/create-shipment-step-1";
@@ -14,7 +14,7 @@ import {
 } from "../model/types";
 import { useCreateShipment } from "@/entities/shipment/model/use-create-shipment";
 
-const stepFields: string[][] = [
+const stepFields: FieldPath<CreateShipmentFormData>[][] = [
   ["sender.name", "sender.address", "sender.phone"],
   ["recipient.name", "recipient.address", "recipient.phone"],
   ["cargo.description", "cargo.weight", "cargo.dimensions", "deliveryOption"],
@@ -26,14 +26,14 @@ export default function CreateShipmentPage() {
   const { mutate, isPending } = useCreateShipment();
 
   const methods = useForm<CreateShipmentFormData>({
-    resolver: zodResolver(createShipmentSchema as any),
+    resolver: zodResolver(createShipmentSchema),
     defaultValues: {
       sender: { name: "", address: "", phone: "" },
       recipient: { name: "", address: "", phone: "" },
       cargo: { description: "", dimensions: "" },
       deliveryOption: "standard",
     },
-    mode: "onTouched",
+    mode: "all",
   });
 
   const onSubmit = (data: CreateShipmentFormData) => {
@@ -42,9 +42,7 @@ export default function CreateShipmentPage() {
   };
 
   const handleNext = async () => {
-    const isValid = await methods.trigger(
-      stepFields[step - 1] as (keyof CreateShipmentFormData)[],
-    );
+    const isValid = await methods.trigger(stepFields[step - 1]);
     if (isValid) {
       navigate({ to: "/shipments/new", search: { step: step + 1 } });
     }
@@ -92,7 +90,6 @@ export default function CreateShipmentPage() {
                 variant="solid"
                 className="bg-accent shadow-accent font-medium text-white"
                 onPress={handleNext}
-                isLoading={isPending}
               >
                 Continue
                 <IoMdArrowForward className="text-base" />
@@ -102,6 +99,7 @@ export default function CreateShipmentPage() {
                 type="submit"
                 variant="solid"
                 className="bg-accent shadow-accent font-medium text-white"
+                isLoading={isPending}
               >
                 Submit
                 <IoMdArrowForward className="text-base" />

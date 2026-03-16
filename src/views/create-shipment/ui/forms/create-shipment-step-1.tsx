@@ -1,16 +1,16 @@
-import { Input } from "@heroui/react";
+import { cn, Input } from "@heroui/react";
 import { HiUser } from "react-icons/hi2";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useFormState } from "react-hook-form";
 import { PhoneInput } from "react-international-phone";
 import type { CreateShipmentFormData } from "../../model/types";
 import styles from "./phone-input.module.css";
 
 export default function CreateShipmentStep1() {
-  const {
-    register,
-    control,
-    formState: { errors },
-  } = useFormContext<CreateShipmentFormData>();
+  const { register, control } = useFormContext<CreateShipmentFormData>();
+  const { errors } = useFormState<CreateShipmentFormData>({
+    name: ["sender.name", "sender.address", "sender.phone"],
+  });
+  console.log(errors);
 
   return (
     <div className="space-y-6">
@@ -43,10 +43,14 @@ export default function CreateShipmentStep1() {
         control={control}
         render={({ field, fieldState }) => (
           <label htmlFor="sender-phone" className={styles.group}>
-            <div className="mb-2 text-sm">Phone number</div>
+            <div
+              className={cn("mb-2 text-sm", fieldState.error && "text-danger")}
+            >
+              Phone number
+            </div>
             <PhoneInput
               placeholder="e. g. (123) 456-7890"
-              className={styles.phoneInput}
+              className={`${styles.phoneInput} ${fieldState.error ? styles.invalid : ""}`}
               hideDropdown
               value={field.value}
               onChange={field.onChange}
