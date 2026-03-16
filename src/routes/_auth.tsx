@@ -15,7 +15,7 @@ function AuthLayout() {
   return (
     <div className="bg-background flex h-screen flex-col overflow-hidden">
       <Header />
-      <div className="flex flex-1 flex-col overflow-hidden pb-16 md:pb-0">
+      <div className="flex flex-1 flex-col overflow-auto pb-16 md:pb-0">
         <Outlet />
       </div>
     </div>

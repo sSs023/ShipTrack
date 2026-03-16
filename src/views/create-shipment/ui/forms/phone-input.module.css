@@ -1,0 +1,33 @@
+@reference '../../../../index.css'
+
+.phoneInput :global(.react-international-phone-input) {
+  flex-grow: 1 !important;
+}
+
+.phoneInput :global(.react-international-phone-country-selector) {
+  display: none !important;
+}
+
+.phoneInput :global(.react-international-phone-input) {
+  border-radius: 8px !important;
+  height: 2.625rem !important;
+  font-size: 15px !important;
+  padding: 0 11px !important;
+}
+
+.phoneInput :global(.react-international-phone-input) {
+  border: 2px solid rgb(228, 228, 231) !important;
+  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  outline: none !important;
+  width: 100% !important;
+  @apply shadow-xs;
+}
+
+.phoneInput:hover :global(.react-international-phone-input),
+.group:hover .phoneInput :global(.react-international-phone-input) {
+  border: 2px solid rgb(179, 174, 174) !important;
+}
+
+.phoneInput:focus-within :global(.react-international-phone-input) {
+  border: 2px solid rgb(179, 174, 174) !important;
+}

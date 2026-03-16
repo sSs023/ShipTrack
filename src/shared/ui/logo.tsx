@@ -1,5 +1,5 @@
+import { cn } from "@heroui/react";
 import { FaTruck } from "react-icons/fa";
-import { twMerge } from "tailwind-merge";
 
 interface LogoProps {
   orientation?: "horizontal" | "vertical";
@@ -8,32 +8,32 @@ interface LogoProps {
 export default function Logo({ orientation = "horizontal" }: LogoProps) {
   return (
     <div
-      className={twMerge(
+      className={cn(
         "flex items-center gap-3",
         orientation === "vertical" ? "flex-col" : "p-6",
       )}
     >
       <div
-        className={twMerge(
+        className={cn(
           "bg-primary flex items-center justify-center rounded-lg",
           orientation === "vertical" ? "shadow-accent mb-4 size-13" : "size-10",
         )}
       >
         <FaTruck
-          className={twMerge(
+          className={cn(
             "text-white",
             orientation === "vertical" ? "size-6.5" : "size-4.5",
           )}
         />
       </div>
       <div
-        className={twMerge(
+        className={cn(
           "flex flex-col gap-1",
           orientation === "vertical" && "items-center gap-2 text-center",
         )}
       >
         <h1
-          className={twMerge(
+          className={cn(
             "leading-none font-bold tracking-tight",
             orientation === "vertical" ? "text-2xl" : "text-sm",
           )}
