@@ -24,3 +24,41 @@ export interface Cargo {
   weight: number;
   dimensions: string;
 }
+
+export type ShipmentStatus =
+  | "pending"
+  | "received"
+  | "processing"
+  | "in_transit"
+  | "out_for_delivery"
+  | "delivered"
+  | "failed";
+
+export interface TrackingEntry {
+  status: ShipmentStatus;
+  timestamp: string;
+  note: string;
+  location: string;
+}
+
+export interface IShipment {
+  _id: string;
+  trackingNumber: string;
+  customerId: string;
+  sender: Sender;
+  recipient: Recipient;
+  cargo: Cargo;
+  deliveryOption: DeliveryOption;
+  status: ShipmentStatus;
+  estimatedDelivery: string;
+  trackingHistory: TrackingEntry[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ShipmentListResponse {
+  total: number;
+  totalPages: number;
+  page: number;
+  shipments: IShipment[];
+}

@@ -1,8 +1,11 @@
 import { request } from "@/shared/api/axios";
-import type { CreateShipmentPayload } from "../model/types";
+import type {
+  CreateShipmentPayload,
+  ShipmentListResponse,
+} from "../model/types";
 
-export async function getShipments() {
-  return await request.get("/shipments");
+export async function getShipments(params: any): Promise<ShipmentListResponse> {
+  return await request.get("/shipments", { params });
 }
 
 export async function createShipment(data: CreateShipmentPayload) {

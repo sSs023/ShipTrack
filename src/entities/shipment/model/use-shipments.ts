@@ -2,6 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getShipments } from "../api/shipments-api";
 
 export function useShipments() {
-  const query = useQuery({ queryKey: ["shipments"], queryFn: getShipments });
+  const query = useQuery({
+    queryKey: ["shipments"],
+    queryFn: () => getShipments({ pageSize: 10 }),
+  });
   return query;
 }
