@@ -1,3 +1,4 @@
+import ShipmentsPage from "@/views/shipments/ui/shipments-page";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth/shipments/")({
@@ -5,9 +6,5 @@ export const Route = createFileRoute("/_auth/shipments/")({
 });
 
 function Shipments() {
-  return (
-    <div className="p-2">
-      <h3>About ShipTrack</h3>
-    </div>
-  );
+  return <ShipmentsPage />;
 }
