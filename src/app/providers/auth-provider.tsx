@@ -20,6 +20,7 @@ export default function AuthProvider({
   const logout = useCallback(() => {
     removeCookie("access");
     removeCookie("refresh");
+    window.location.href = "/login";
   }, [removeCookie]);
 
   const value = useMemo(
