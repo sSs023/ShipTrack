@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { createShipment } from "../api/shipments-api";
+import { createShipment } from "../../../entities/shipment/api/shipments-api";
 
 export function useCreateShipment() {
   const mutation = useMutation({

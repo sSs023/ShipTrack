@@ -1,4 +1,4 @@
-import CreateShipmentPage from "@/views/create-shipment/ui/create-shipment-page";
+import { CreateShipmentPage } from "@/features/create-shipment";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 

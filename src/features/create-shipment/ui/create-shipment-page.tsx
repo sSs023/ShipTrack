@@ -12,7 +12,7 @@ import {
   createShipmentSchema,
   type CreateShipmentFormData,
 } from "../model/types";
-import { useCreateShipment } from "@/entities/shipment/model/use-create-shipment";
+import { useCreateShipment } from "../model/use-create-shipment";
 
 const stepFields: FieldPath<CreateShipmentFormData>[][] = [
   ["sender.name", "sender.address", "sender.phone"],
