@@ -1,6 +1,8 @@
-import ShipmentsFilters from "./shipments-filters";
-import ShipmentsHeader from "./shipments-header";
-import ShipmentsTable from "./shipments-table";
+import {
+  ShipmentsFilters,
+  ShipmentsHeader,
+  ShipmentsTable,
+} from "@/features/list-shipments";
 
 export default function ShipmentsPage() {
   return (
