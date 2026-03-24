@@ -1,3 +1,148 @@
+import {
+  deliveryOptions,
+  ShipmentStatusBadge,
+  useShipments,
+  type IShipment,
+} from "@/entities/shipment";
+import {
+  Card,
+  cn,
+  getKeyValue,
+  Pagination,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@heroui/react";
+import { Link } from "@tanstack/react-router";
+import dayjs from "dayjs";
+import { LuExternalLink } from "react-icons/lu";
+
 export default function ShipmentsTable() {
-  return <div>ShipmentsTable</div>;
+  const { data, isFetching } = useShipments();
+
+  const skeletonItems = Array.from(
+    { length: 10 },
+    (_, i) => ({ _id: `skeleton-${i}` }) as IShipment,
+  );
+
+  const skeletonWidths: Record<string, string> = {
+    trackingNumber: "w-28",
+    recipient: "w-24",
+    status: "w-20",
+    action: "w-12",
+  };
+
+  const columns = [
+    {
+      label: "Tracking number",
+      key: "trackingNumber",
+      render: (value: any) => (
+        <span className="bg-muted-light/20 rounded-sm px-2 py-0.5 font-mono font-bold">
+          {value}
+        </span>
+      ),
+    },
+    {
+      label: "Recipient",
+      key: "recipient",
+      render: (value: any) => (
+        <span className="text-sm font-medium">{value?.name}</span>
+      ),
+    },
+    {
+      label: "Option",
+      key: "deliveryOption",
+      render: (key: string) => {
+        const label = deliveryOptions.find((d) => d.plan === key)?.label;
+        return <span className="text-muted text-sm">{label}</span>;
+      },
+    },
+    {
+      label: "Status",
+      key: "status",
+      render: (value: any) => <ShipmentStatusBadge status={value} />,
+    },
+    {
+      label: "Date Created",
+      key: "createdAt",
+      render: (value: string) => dayjs(value).format("MMM D, YYYY"),
+    },
+    {
+      label: "Action",
+      key: "action",
+      render: (_: any, record: IShipment) => (
+        <Link
+          to="/shipments/$shipmentId"
+          params={{ shipmentId: record?.trackingNumber }}
+          className="text-accent flex items-center gap-1 text-sm font-medium"
+        >
+          View
+          <LuExternalLink />
+        </Link>
+      ),
+    },
+  ];
+
+  return (
+    <Card className="space-y-5">
+      <Table
+        classNames={{ wrapper: "shadow-none p-0 rounded-none" }}
+        bottomContent={
+          <div className="flex items-center justify-between px-6 py-4">
+            <span className="text-muted text-sm">
+              Showing 1 to 5 of 24 results
+            </span>
+            <Pagination total={data?.total || 0} className="w-max" />
+          </div>
+        }
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.key}
+              className={cn(
+                column.key === "action" ? "w-0" : "w-max",
+                "text-muted rounded-none! text-xs font-bold tracking-wide uppercase first:pl-6! last:pr-6!",
+              )}
+            >
+              {column.label}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={isFetching ? skeletonItems : data?.shipments || []}>
+          {(item) => (
+            <TableRow
+              key={item._id}
+              className="hover:bg-muted/5 h-14 cursor-pointer transition-all duration-100"
+            >
+              {(columnKey) => {
+                const column = columns.find((col) => col.key === columnKey);
+                return (
+                  <TableCell className="first:pl-6! last:pr-6!">
+                    {isFetching ? (
+                      <Skeleton
+                        className={cn(
+                          "h-5 rounded-md",
+                          skeletonWidths[columnKey || ""],
+                        )}
+                      />
+                    ) : (
+                      column?.render?.(
+                        item[columnKey as keyof IShipment],
+                        item,
+                      ) || getKeyValue(item, columnKey)
+                    )}
+                  </TableCell>
+                );
+              }}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </Card>
+  );
 }

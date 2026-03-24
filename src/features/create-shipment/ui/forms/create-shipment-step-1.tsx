@@ -10,7 +10,6 @@ export default function CreateShipmentStep1() {
   const { errors } = useFormState<CreateShipmentFormData>({
     name: ["sender.name", "sender.address", "sender.phone"],
   });
-  console.log(errors);
 
   return (
     <div className="space-y-6">
