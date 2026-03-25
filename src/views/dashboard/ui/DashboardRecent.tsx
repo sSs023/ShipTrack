@@ -83,32 +83,29 @@ export default function DashboardRecent() {
               <Table.Collection
                 items={items?.map((val) => ({ ...val, key: val._id }))}
               >
-                {(cargo) => {
-                  console.log(cargo);
-                  return (
-                    <Table.Row>
-                      <Table.Collection items={columns}>
-                        {(col) => (
-                          <Table.Cell className="first:pl-6! last:pr-6!">
-                            {isFetching ? (
-                              <Skeleton
-                                className={cn(
-                                  "h-5 rounded-md",
-                                  skeletonWidths[String(col.key)],
-                                )}
-                              />
-                            ) : (
-                              col?.render?.(
-                                cargo[String(col.key) as keyof IShipment],
-                                cargo,
-                              ) || (cargo as any)[String(col.key)]
-                            )}
-                          </Table.Cell>
-                        )}
-                      </Table.Collection>
-                    </Table.Row>
-                  );
-                }}
+                {(cargo) => (
+                  <Table.Row>
+                    <Table.Collection items={columns}>
+                      {(col) => (
+                        <Table.Cell className="first:pl-6! last:pr-6!">
+                          {isFetching ? (
+                            <Skeleton
+                              className={cn(
+                                "h-5 rounded-md",
+                                skeletonWidths[String(col.key)],
+                              )}
+                            />
+                          ) : (
+                            col?.render?.(
+                              cargo[String(col.key) as keyof IShipment],
+                              cargo,
+                            ) || (cargo as any)[String(col.key)]
+                          )}
+                        </Table.Cell>
+                      )}
+                    </Table.Collection>
+                  </Table.Row>
+                )}
               </Table.Collection>
             </Table.Body>
           </Table.Content>

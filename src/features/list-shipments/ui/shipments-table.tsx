@@ -79,58 +79,59 @@ export default function ShipmentsTable() {
 
   return (
     <Card className="space-y-5">
-      <Table className="rounded-none p-0 shadow-none">
-        <Table.Header>
-          <Table.Collection items={columns}>
-            {(column) => (
-              <Table.Column
-                key={column.key}
-                className={cn(
-                  column.key === "action" ? "w-0" : "w-max",
-                  "text-muted rounded-none! text-xs font-bold tracking-wide uppercase first:pl-6! last:pr-6!",
-                )}
+      <Table className="bg-transparent p-0">
+        <Table.ScrollContainer>
+          <Table.Content>
+            <Table.Header>
+              {columns.map((column) => (
+                <Table.Column
+                  key={column.key}
+                  className={cn(
+                    column.key === "action" ? "w-0" : "w-max",
+                    "text-muted rounded-none! text-xs font-bold tracking-wide uppercase first:pl-6! last:pr-6!",
+                  )}
+                >
+                  {column.label}
+                </Table.Column>
+              ))}
+            </Table.Header>
+            <Table.Body>
+              <Table.Collection
+                items={items?.map((item, i) => ({
+                  ...item,
+                  key: item?._id || `skeleton-${i}`,
+                }))}
               >
-                {column.label}
-              </Table.Column>
-            )}
-          </Table.Collection>
-        </Table.Header>
-        <Table.Body>
-          <Table.Collection
-            items={items?.map((val, i) => ({
-              ...val,
-              key: val?._id || `skeleton-${i}`,
-            }))}
-          >
-            {(item) => (
-              <Table.Row
-                key={item._id}
-                className="hover:bg-muted/5 h-14 cursor-pointer transition-all duration-100"
-              >
-                {(columnKey) => {
-                  const col = columns.find((c) => c.key === String(columnKey));
+                {(cargo) => {
+                  console.log(cargo);
                   return (
-                    <Table.Cell className="first:pl-6! last:pr-6!">
-                      {isFetching ? (
-                        <Skeleton
-                          className={cn(
-                            "h-5 rounded-md",
-                            skeletonWidths[String(columnKey)],
-                          )}
-                        />
-                      ) : (
-                        col?.render?.(
-                          item[String(columnKey) as keyof IShipment],
-                          item,
-                        ) || (item as any)[String(columnKey)]
-                      )}
-                    </Table.Cell>
+                    <Table.Row>
+                      <Table.Collection items={columns}>
+                        {(col) => (
+                          <Table.Cell className="first:pl-6! last:pr-6!">
+                            {isFetching ? (
+                              <Skeleton
+                                className={cn(
+                                  "h-5 rounded-md",
+                                  skeletonWidths[String(col.key)],
+                                )}
+                              />
+                            ) : (
+                              col?.render?.(
+                                cargo[String(col.key) as keyof IShipment],
+                                cargo,
+                              ) || (cargo as any)[String(col.key)]
+                            )}
+                          </Table.Cell>
+                        )}
+                      </Table.Collection>
+                    </Table.Row>
                   );
                 }}
-              </Table.Row>
-            )}
-          </Table.Collection>
-        </Table.Body>
+              </Table.Collection>
+            </Table.Body>
+          </Table.Content>
+        </Table.ScrollContainer>
       </Table>
       <div className="flex items-center justify-between px-6 py-4">
         <span className="text-muted text-sm">Showing 1 to 5 of 24 results</span>
