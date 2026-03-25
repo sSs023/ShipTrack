@@ -1,17 +1,6 @@
 import type { IShipment } from "@/entities/shipment/model/types";
 import ShipmentStatusBadge from "@/entities/shipment/ui/shipment-status-badge";
-import {
-  Card,
-  cn,
-  getKeyValue,
-  Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from "@heroui/react";
+import { Card, cn, Skeleton, Table, TableScrollContainer } from "@heroui/react";
 import { Link } from "@tanstack/react-router";
 import { LuExternalLink } from "react-icons/lu";
 import { useShipments } from "../../../entities/shipment/model/use-shipments";
@@ -69,60 +58,65 @@ export default function DashboardRecent() {
     },
   ];
 
+  const items = isFetching ? skeletonItems : data?.shipments || [];
+
   return (
     <Card className="space-y-5">
       <h2 className="px-6 pt-6 text-lg font-bold">Recent Shipments</h2>
-      <Table
-        classNames={{ wrapper: "shadow-none p-0 rounded-none" }}
-        bottomContent={
-          <div className="text-muted bg-muted-light/10 hover:bg-muted-light/20 flex cursor-pointer items-center justify-center py-4! text-sm font-bold transition-all">
-            Load More History
-          </div>
-        }
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn
-              key={column.key}
-              className={cn(
-                column.key === "action" ? "w-0" : "w-max",
-                "text-muted rounded-none! text-xs font-bold tracking-wide uppercase first:pl-6! last:pr-6!",
-              )}
-            >
-              {column.label}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={isFetching ? skeletonItems : data?.shipments || []}>
-          {(item) => (
-            <TableRow
-              key={item._id}
-              className="hover:bg-muted/5 h-14 cursor-pointer transition-all duration-100"
-            >
-              {(columnKey) => {
-                const column = columns.find((col) => col.key === columnKey);
-                return (
-                  <TableCell className="first:pl-6! last:pr-6!">
-                    {isFetching ? (
-                      <Skeleton
-                        className={cn(
-                          "h-5 rounded-md",
-                          skeletonWidths[columnKey as string],
+      <Table>
+        <TableScrollContainer>
+          <Table.Content>
+            <Table.Header>
+              {columns.map((column) => (
+                <Table.Column
+                  key={column.key}
+                  className={cn(
+                    column.key === "action" ? "w-0" : "w-max",
+                    "text-muted rounded-none! text-xs font-bold tracking-wide uppercase first:pl-6! last:pr-6!",
+                  )}
+                >
+                  {column.label}
+                </Table.Column>
+              ))}
+            </Table.Header>
+            <Table.Body>
+              <Table.Collection
+                items={items?.map((val) => ({ ...val, key: val._id }))}
+              >
+                {(cargo) => {
+                  console.log(cargo);
+                  return (
+                    <Table.Row>
+                      <Table.Collection items={columns}>
+                        {(col) => (
+                          <Table.Cell className="first:pl-6! last:pr-6!">
+                            {isFetching ? (
+                              <Skeleton
+                                className={cn(
+                                  "h-5 rounded-md",
+                                  skeletonWidths[String(col.key)],
+                                )}
+                              />
+                            ) : (
+                              col?.render?.(
+                                cargo[String(col.key) as keyof IShipment],
+                                cargo,
+                              ) || (cargo as any)[String(col.key)]
+                            )}
+                          </Table.Cell>
                         )}
-                      />
-                    ) : (
-                      column?.render?.(
-                        item[columnKey as keyof IShipment],
-                        item,
-                      ) || getKeyValue(item, columnKey)
-                    )}
-                  </TableCell>
-                );
-              }}
-            </TableRow>
-          )}
-        </TableBody>
+                      </Table.Collection>
+                    </Table.Row>
+                  );
+                }}
+              </Table.Collection>
+            </Table.Body>
+          </Table.Content>
+        </TableScrollContainer>
       </Table>
+      <div className="text-muted bg-muted-light/10 hover:bg-muted-light/20 flex cursor-pointer items-center justify-center py-4! text-sm font-bold transition-all">
+        Load More History
+      </div>
     </Card>
   );
 }

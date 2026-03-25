@@ -11,7 +11,7 @@ export default function ShipmentStatusBadge({
 }: ShipmentStatusBadgeProps) {
   return (
     <Chip
-      variant="flat"
+      variant="soft"
       color={shipmentStatusMap?.[status]?.color || "default"}
       className="rounded-lg"
     >

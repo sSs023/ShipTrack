@@ -1,4 +1,4 @@
-import { Button, Card } from "@heroui/react";
+import { Button, Card, Spinner } from "@heroui/react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 import { FormProvider, useForm, type FieldPath } from "react-hook-form";
@@ -7,7 +7,7 @@ import CreateShipmentHeader from "./create-shipment-header";
 import CreateShipmentStep1 from "./forms/create-shipment-step-1";
 import CreateShipmentStep2 from "./forms/create-shipment-step-2";
 import CreateShipmentStep3 from "./forms/create-shipment-step-3";
-import CreateShipmentDelivery from "./forms/create-shipment-delivery";
+import CreateShipmentDelivery from "./create-shipment-delivery";
 import {
   createShipmentSchema,
   type CreateShipmentFormData,
@@ -70,8 +70,8 @@ export default function CreateShipmentPage() {
 
           <div className="flex items-center justify-between">
             <Button
-              variant="solid"
-              disabled={step === 1}
+              variant="secondary"
+              isDisabled={step === 1}
               className="disabled:text-muted gap-3 border bg-white font-medium"
               onPress={() =>
                 step > 1
@@ -87,7 +87,7 @@ export default function CreateShipmentPage() {
             </Button>
             {step < 3 ? (
               <Button
-                variant="solid"
+                variant="primary"
                 className="bg-accent shadow-accent font-medium text-white"
                 onPress={handleNext}
               >
@@ -97,12 +97,17 @@ export default function CreateShipmentPage() {
             ) : (
               <Button
                 type="submit"
-                variant="solid"
+                variant="primary"
                 className="bg-accent shadow-accent font-medium text-white"
-                isLoading={isPending}
+                isPending={isPending}
               >
-                Submit
-                <IoMdArrowForward className="text-base" />
+                {({ isPending: loading }) => (
+                  <>
+                    {loading && <Spinner color="current" size="sm" />}
+                    Submit
+                    <IoMdArrowForward className="text-base" />
+                  </>
+                )}
               </Button>
             )}
           </div>

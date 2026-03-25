@@ -1,4 +1,4 @@
-import { cn, Input } from "@heroui/react";
+import { cn, TextField, Label, Input, FieldError } from "@heroui/react";
 import { HiUser } from "react-icons/hi2";
 import { Controller, useFormContext, useFormState } from "react-hook-form";
 import { PhoneInput } from "react-international-phone";
@@ -14,29 +14,24 @@ export default function CreateShipmentStep1() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <div className="bg-accent/15 text-accent flex size-9 items-center justify-center rounded-lg">
+        <div className="bg-accent-soft text-accent flex size-9 items-center justify-center rounded-lg">
           <HiUser className="text-xl" />
         </div>
         <h3 className="text-xl font-bold">Sender Information</h3>
       </div>
-      <Input
-        label="Full Name"
-        labelPlacement="outside-top"
-        placeholder="e. g. John Doe"
-        variant="bordered"
-        isInvalid={!!errors.sender?.name}
-        errorMessage={errors.sender?.name?.message}
-        {...register("sender.name")}
-      />
-      <Input
-        label="Address"
-        labelPlacement="outside-top"
-        placeholder="e. g. 123 Main St"
-        variant="bordered"
-        isInvalid={!!errors.sender?.address}
-        errorMessage={errors.sender?.address?.message}
-        {...register("sender.address")}
-      />
+      <TextField isInvalid={!!errors.sender?.name}>
+        <Label>Full Name</Label>
+        <Input placeholder="e. g. John Doe" {...register("sender.name")} />
+        <FieldError>{errors.sender?.name?.message}</FieldError>
+      </TextField>
+      <TextField isInvalid={!!errors.sender?.address}>
+        <Label>Address</Label>
+        <Input
+          placeholder="e. g. 123 Main St"
+          {...register("sender.address")}
+        />
+        <FieldError>{errors.sender?.address?.message}</FieldError>
+      </TextField>
       <Controller
         name="sender.phone"
         control={control}

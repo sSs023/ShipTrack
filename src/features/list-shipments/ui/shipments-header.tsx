@@ -12,11 +12,7 @@ export default function ShipmentsHeader() {
         </p>
       </div>
       <Link to="/shipments/new">
-        <Button
-          variant="solid"
-          color="primary"
-          className="text-base font-semibold"
-        >
+        <Button variant="primary" className="text-base font-semibold">
           <FiPlus className="text-lg" />
           Create Shipment
         </Button>

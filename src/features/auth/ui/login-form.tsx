@@ -1,11 +1,15 @@
 import {
-  addToast,
+  toast,
   Button,
   Card,
   Checkbox,
-  Divider,
+  Separator,
   Form,
-  Input,
+  TextField,
+  Label,
+  InputGroup,
+  FieldError,
+  Spinner,
 } from "@heroui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -28,10 +32,7 @@ export default function LoginForm() {
     mutationKey: ["signInWithPassword"],
     mutationFn: loginWithEmailAndPassword,
     onSuccess: (data) => {
-      addToast({
-        severity: "success",
-        title: t("login.loginSuccess"),
-      });
+      toast.success(t("login.loginSuccess"));
       login(data.token, data.token);
       navigate({ to: "/" });
     },
@@ -60,20 +61,22 @@ export default function LoginForm() {
         <p className="text-muted text-sm">{t("login.enterCredentials")}</p>
       </div>
       <Form onSubmit={handleSubmit} className="gap-0 space-y-5">
-        <Input
-          labelPlacement="outside-top"
-          label={
-            <span className="text-sm font-semibold">{t("login.email")}</span>
-          }
-          placeholder={t("login.emailPlaceholder")}
-          required
-          variant="faded"
-          startContent={<FaRegEnvelope className="text-muted-light mr-1" />}
-          name="email"
-        />
-        <Input
-          labelPlacement="outside-top"
-          label={
+        <TextField name="email" isRequired>
+          <Label className="text-sm font-semibold">{t("login.email")}</Label>
+          <InputGroup>
+            <InputGroup.Prefix>
+              <FaRegEnvelope className="text-muted-light mr-1" />
+            </InputGroup.Prefix>
+            <InputGroup.Input placeholder={t("login.emailPlaceholder")} />
+          </InputGroup>
+          <FieldError />
+        </TextField>
+        <TextField
+          name="password"
+          type={visible ? "text" : "password"}
+          isRequired
+        >
+          <Label>
             <div className="flex items-center justify-between">
               <span className="text-sm font-semibold">
                 {t("login.password")}
@@ -82,34 +85,47 @@ export default function LoginForm() {
                 {t("login.forgotPassword")}
               </span>
             </div>
-          }
-          placeholder="••••••••"
-          type={visible ? "text" : "password"}
-          variant="faded"
-          name="password"
-          required
-          startContent={<MdLockOutline className="text-muted mr-1" />}
-          endContent={
-            <button
-              type="button"
-              className="text-muted cursor-pointer"
-              onClick={() => setVisible(!visible)}
-            >
-              {!visible ? <FiEye /> : <FiEyeOff />}
-            </button>
-          }
-        />
-        <Checkbox className="mb-5">{t("login.rememberDevice")}</Checkbox>
+          </Label>
+          <InputGroup>
+            <InputGroup.Prefix>
+              <MdLockOutline className="text-muted mr-1" />
+            </InputGroup.Prefix>
+            <InputGroup.Input placeholder="••••••••" />
+            <InputGroup.Suffix>
+              <button
+                type="button"
+                className="text-muted cursor-pointer"
+                onClick={() => setVisible(!visible)}
+              >
+                {!visible ? <FiEye /> : <FiEyeOff />}
+              </button>
+            </InputGroup.Suffix>
+          </InputGroup>
+          <FieldError />
+        </TextField>
+        <Checkbox className="mb-5" id="remember">
+          <Checkbox.Control>
+            <Checkbox.Indicator />
+          </Checkbox.Control>
+          <Checkbox.Content>
+            <Label htmlFor="remember">{t("login.rememberDevice")}</Label>
+          </Checkbox.Content>
+        </Checkbox>
         <Button
           type="submit"
           size="lg"
           className="bg-accent shadow-accent z-9999 w-full text-base font-bold text-white"
-          isLoading={isPending}
+          isPending={isPending}
         >
-          {t("login.signIn")} <FiArrowRight />
+          {({ isPending: loading }) => (
+            <>
+              {loading && <Spinner color="current" size="sm" />}
+              {t("login.signIn")} <FiArrowRight />
+            </>
+          )}
         </Button>
       </Form>
-      <Divider />
+      <Separator />
       <div className="text-muted flex items-center justify-center gap-2 text-xs uppercase">
         <IoShieldCheckmarkOutline className="text-sm" />
         {t("login.secureConnection")}
