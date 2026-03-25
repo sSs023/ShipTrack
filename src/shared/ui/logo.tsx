@@ -15,7 +15,7 @@ export default function Logo({ orientation = "horizontal" }: LogoProps) {
     >
       <div
         className={cn(
-          "bg-primary flex items-center justify-center rounded-lg",
+          "bg-accent flex items-center justify-center rounded-lg",
           orientation === "vertical" ? "shadow-accent mb-4 size-13" : "size-10",
         )}
       >

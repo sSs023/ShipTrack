@@ -1,4 +1,4 @@
-import { addToast } from "@heroui/react";
+import { toast } from "@heroui/react";
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 import { Cookies } from "react-cookie";
 
@@ -94,12 +94,8 @@ request.interceptors.response.use(
     }
 
     const errorMessage = error?.response?.data?.detail || "An error occurred";
-    addToast({
-      title: "Error",
+    toast.danger("Error", {
       description: errorMessage,
-      variant: "flat",
-      color: "danger",
-      severity: "danger",
     });
 
     return Promise.reject(error);

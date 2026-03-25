@@ -1,4 +1,4 @@
-import { HeroUIProvider, ToastProvider } from "@heroui/react";
+import { Toast } from "@heroui/react";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { CookiesProvider } from "react-cookie";
 import QueryProvider from "./app/providers/query-provider";
@@ -35,8 +35,8 @@ function InnerApp() {
 
 function App() {
   return (
-    <HeroUIProvider disableRipple>
-      <ToastProvider placement="top-center" />
+    <>
+      <Toast.Provider placement="top" />
       <CookiesProvider defaultSetOptions={{ path: "/" }}>
         <QueryProvider>
           <AuthProvider>
@@ -44,7 +44,7 @@ function App() {
           </AuthProvider>
         </QueryProvider>
       </CookiesProvider>
-    </HeroUIProvider>
+    </>
   );
 }
 

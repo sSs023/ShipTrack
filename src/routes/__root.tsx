@@ -1,6 +1,8 @@
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { type AuthStateContext } from "../features/auth";
+import ErrorPage from "../shared/ui/error-page";
+import NotFound from "../shared/ui/not-found";
 
 function RootLayout() {
   return (
@@ -13,5 +15,6 @@ function RootLayout() {
 
 export const Route = createRootRouteWithContext<AuthStateContext>()({
   component: RootLayout,
-  // notFoundComponent: () => <Navigate to="/chats" />,
+  errorComponent: ErrorPage,
+  notFoundComponent: NotFound,
 });

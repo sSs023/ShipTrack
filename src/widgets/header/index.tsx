@@ -1,4 +1,4 @@
-import { Button, Divider } from "@heroui/react";
+import { Button, Separator } from "@heroui/react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { CgBell } from "react-icons/cg";
@@ -49,7 +49,7 @@ export default function Header() {
         <Button variant="ghost">
           <GoQuestion className="size-5 text-slate-500" />
         </Button>
-        <Divider orientation="vertical" className="h-8" />
+        <Separator orientation="vertical" className="h-8" />
         <ProfilePopover />
       </div>
     </div>

@@ -16,7 +16,7 @@ export default function DashboardWelcome() {
         </div>
         <Link to="/shipments/new">
           <Button
-            variant="solid"
+            variant="primary"
             className="bg-accent shadow-accent h-auto rounded-lg px-8 py-3 text-base font-bold text-white"
           >
             <FiPlusCircle className="size-5" />

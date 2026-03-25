@@ -1,4 +1,4 @@
-import { Progress } from "@heroui/react";
+import { ProgressBar } from "@heroui/react";
 import { useSearch } from "@tanstack/react-router";
 
 export default function CreateShipmentHeader() {
@@ -21,7 +21,7 @@ export default function CreateShipmentHeader() {
           <span className="text-muted text-xs">{value}%</span>
         </div>
       </div>
-      <Progress value={value} maxValue={100} className="h-2" />
+      <ProgressBar value={value} maxValue={100} className="h-2" />
     </div>
   );
 }
